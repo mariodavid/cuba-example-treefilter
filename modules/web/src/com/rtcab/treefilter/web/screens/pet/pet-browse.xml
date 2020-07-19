@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+  xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+  caption="msg://petBrowse.caption"
+  focusComponent="petsTable"
+  messagesPack="com.rtcab.treefilter.web.screens.pet">
+  <data readOnly="true">
+    <collection id="petsDc"
+      class="com.rtcab.treefilter.entity.Pet">
+      <view extends="pet-view"/>
+      <loader id="petsDl">
+        <query>
+          <![CDATA[select e from treefilter_Pet e where e.topLevelParent = :container_topLevelPetsDc]]>
+        </query>
+      </loader>
+    </collection>
+    <collection id="topLevelPetsDc"
+      class="com.rtcab.treefilter.entity.Pet">
+      <view extends="pet-view"/>
+      <loader id="teopLevelPetsDl">
+        <query>
+          <![CDATA[select e from treefilter_Pet e where e.parent is null]]>
+        </query>
+      </loader>
+    </collection>
+  </data>
+  <dialogMode height="600"
+    width="800"/>
+
+  <facets>
+    <dataLoadCoordinator auto="true"/>
+  </facets>
+
+
+  <layout expand="petsTable"
+    spacing="true">
+
+    <lookupField optionsContainer="topLevelPetsDc" caption="msg://topLevelPet"/>
+
+
+    <treeTable id="petsTable"
+      width="100%"
+      dataContainer="petsDc"
+      hierarchyProperty="parent">
+      <actions>
+        <action id="create" type="create"/>
+        <action id="edit" type="edit"/>
+        <action id="remove" type="remove"/>
+      </actions>
+      <columns>
+        <column id="name"/>
+      </columns>
+      <rowsCount/>
+      <buttonsPanel id="buttonsPanel"
+        alwaysVisible="true">
+        <button id="createBtn" action="petsTable.create"/>
+        <button id="editBtn" action="petsTable.edit"/>
+        <button id="removeBtn" action="petsTable.remove"/>
+      </buttonsPanel>
+    </treeTable>
+    <hbox id="lookupActions" spacing="true" visible="false">
+      <button action="lookupSelectAction"/>
+      <button action="lookupCancelAction"/>
+    </hbox>
+  </layout>
+</window>

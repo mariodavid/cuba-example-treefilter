@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<views xmlns="http://schemas.haulmont.com/cuba/view.xsd">
+
+  <view entity="treefilter_Pet" name="pet-view" extends="_local">
+    <property name="parent" view="_minimal"/>
+    <property name="topLevelParent" view="_minimal"/>
+  </view>
+</views>
